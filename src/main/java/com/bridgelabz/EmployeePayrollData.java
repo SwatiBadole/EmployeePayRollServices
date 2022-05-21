@@ -1,6 +1,6 @@
 package com.bridgelabz;
 
-public class EmployeePayroll {
+public class EmployeePayrollData {
     private int id;
     private String name;
     private double salary;
@@ -29,7 +29,7 @@ public class EmployeePayroll {
         this.salary = salary;
     }
 
-    public EmployeePayroll(int id, String name, double salary) {
+    public EmployeePayrollData(int id, String name, double salary) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -43,4 +43,5 @@ public class EmployeePayroll {
                 ", salary=" + salary +
                 '}';
     }
+
 }

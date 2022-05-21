@@ -1,18 +1,30 @@
 package com.bridgelabz;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class EmployeePayrollService {
-
     public enum IOService {CONSOLE_IO, FILE_IO}
 
-    private List<EmployeePayroll> employeePayrollList;
+    private List<EmployeePayrollData> employeePayrollList;
 
     public EmployeePayrollService() {
 
+    }
+
+    public EmployeePayrollService(List<EmployeePayrollData> emplyeePayrollList) {
+        this.employeePayrollList = emplyeePayrollList;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("---------------welcome to EmployeePayrollService---------");
+        System.out.println("_____________________________________________________________");
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<EmployeePayrollData> employeePayrollArrayList = new ArrayList<>();
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollArrayList);
+        employeePayrollService.readEmplyoeePayrollData(scanner);
+        employeePayrollService.writeEmplyoeePayrollData(IOService.CONSOLE_IO);
     }
 
     private void readEmplyoeePayrollData(Scanner data) {
@@ -22,44 +34,39 @@ public class EmployeePayrollService {
         int id = data.nextInt();
         System.out.println("Enter your salary");
         double salary = data.nextDouble();
-
-        EmployeePayroll empData = new EmployeePayroll(id, name, salary);
-        employeePayrollList.add(empData);
+        employeePayrollList.add(new EmployeePayrollData(id, name, salary));
     }
 
-    //public long readEmployeePayrollDAta(IOService ioService) {
+    public void writeEmplyoeePayrollData(IOService ioService) {
+        if (ioService.equals(IOService.CONSOLE_IO)) {
+            System.out.println("\n Writing Employee payroll roster to console" + employeePayrollList);
+        } else if (ioService.equals(IOService.FILE_IO)) {
+            new EmployeePayrollFileIOService().writeData(employeePayrollList);
 
-    //}
-
-    public void WriteEmplyoeePayrollData() {
-        System.out.println("Employee Data" + employeePayrollList);
+        }
     }
+    public long readEmployeePayrollData(IOService ioService) {
+        if (ioService.equals(IOService.FILE_IO)) {
+            this.employeePayrollList = new EmployeePayrollFileIOService().readData();
+            //new EmployeePayrollFileIOService().countEntries();
+            return employeePayrollList.size();
+        }
 
-    public EmployeePayrollService(List<EmployeePayroll> emplyeePayrollList) {
-        this.employeePayrollList = emplyeePayrollList;
+        return 0;
     }
-
-   /* public long readEmployeePayrollDAta(IOService ioService) {
-
-        return ;
-    }
-
     public void printData(IOService ioService) {
+        if (ioService.equals(IOService.FILE_IO)) {
+            new EmployeePayrollFileIOService().printdata();
+        }
     }
 
     public long countEntries(IOService ioService) {
-
+        if (ioService.equals(IOService.FILE_IO)) {
+            return new EmployeePayrollFileIOService().countEntries();
+            //return 0;
+        }
+        return 0;
     }
-*/
-    public static void main(String[] args) {
-        System.out.println("---------------welcome to EmployeePayrollService---------");
-        System.out.println("_____________________________________________________________");
-        Scanner scanner=new Scanner(System.in);
-        ArrayList<EmployeePayroll> employeePayrollArrayList=new ArrayList<>();
-        EmployeePayrollService employeePayrollService=new EmployeePayrollService(employeePayrollArrayList);
-        employeePayrollService.readEmplyoeePayrollData(scanner);
-        employeePayrollService.WriteEmplyoeePayrollData();
 
-
-    }
 }
+
